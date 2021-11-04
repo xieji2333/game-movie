@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="static/login_style.css">
+    <script src="static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" >
+        $(function () {
+
+            //使用ajax判断用户名是否已存在
+            $("#username").blur(function () {
+                // alert("123");
+                if ($("#username").val() !== ""){
+                    $.ajax({
+                        url:"[[@{/existsUser}]]",
+                        data:{username:$("#username").val()},
+                        type:"GET",
+                        success:function (data) {
+                            if (data.existsUser) {
+                                $("label.errorMsg").css('color','red');
+                                $("label.errorMsg").text("Your username already exists!");
+                            } else {
+                                $("label.errorMsg").css('color','springgreen');
+                                $("label.errorMsg").text("Your username is available!");
+                            }
+                        },
+                        dataType:"json"
+                    });
+                }
+            });
+
+            $("#confirm_password").blur(function () {
+                //踩过的坑：变量要定义在blur函数内，之前定义在外面导致获取的密码永远是空串QAQ
+                var pwd = $("#password").val();
+                var coPwd = $("#confirm_password").val();
+                // console.log(pwd);
+                // console.log(coPwd);
+                if (pwd !== "" && coPwd !== "") {
+                    $.getJSON("[[@{/checkPwd}]]", {"pwd": pwd, "coPwd": coPwd}, function (data) {
+                        if (data.equals === "eq") {
+                            $("#pwdMsg").css('color', 'springgreen');
+                            $("#pwdMsg").text("√");
+                        } else {
+                            $("#pwdMsg").css('color', 'tomato');
+                            $("#pwdMsg").text("× Need accordance!");
+                        }
+                    });
+                }
+            });
+
+            //给验证码图片绑定单击事件
+            $("#code_img").click(function () {
+                //this对象是当前正在响应事件的dom对象
+                //加上每次都不同的参数可以跳过浏览器地缓存检查
+                this.src = "kaptcha.jpg?d=" + new Date();
+            });
+
+            //给表单提交按钮绑定单击事件
+            $("#btn").click(function () {
+
+                //获取验证码信息
+                let code = $("#code").val();
+                //去除空格
+                $.trim(code);
+                //判断验证码是否为空
+                if (code == null || code === ""){
+                    $("label.errorMsg").text("Verification code should be enter!");
+                    //验证码为空则阻止表单提交
+                    return false;
+                }
+
+                // 出现错误则阻止提交
+                let errorText = $("label.errorMsg").text();
+                let errorPwd = $("#pwdMsg").text();
+                if ("Your username already exists!" === errorText ||
+                    "× Need accordance!" === errorPwd) {
+                    return false;
+                } else {
+                    //消除错误信息
+                    $("label.errorMsg").text("");
+                }
+            });
+
+        });
+    </script>
+</head>
+<body class="login-body">
+
+<div class="container">
+    <form class="form-signin" method="post" th:action="@{/submit_register}">
+        <div class="form-signin-heading text-center">
+            <h1 class="sign-title">Register</h1>
+            <img src="static/images/logo.png" alt=""/>
+        </div>
+        <div class="login-wrap">
+            <label class="errorMsg" style="color: red" th:text="${msg}"></label> <br>
+            <input id="username" type="text" name="username" class="form-control"
+                   placeholder="username" autofocus>
+            <br>
+            <input type="password" id="password" name="password" class="form-control" placeholder="password">
+            <br>
+            <div>
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="confirmation password">
+                <nobr id="pwdMsg" style="color: tomato; font-size: 5px"></nobr>
+            </div>
+            <br>
+            <input id="code" type="text" name="code" class="form-control">
+            <img src="kaptcha.jpg" id="code_img" style="float: right; margin-right: 10px; width: 100px; height: 30px">
+            <br>
+            <button id="btn" style="width: 280px; height: 50px" class="btn btn-lg btn-login btn-block" type="submit">
+                <i class="fa fa-check">√</i>
+            </button>
+
+            <div class="registration">
+                Already have an account?
+                <a class="" th:href="@{/login}">
+                    Go to login
+                </a>
+            </div>
+
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:replace="common :: commonHead">
+
+    <title>Assassin's creed</title>
+</head>
+<body>
+    <div id="site-content">
+        <header id="commonHeader" class="site-header">
+            <div class="container">
+                <a th:href="@{/index}" id="branding">
+                    <img src="static/images/logo.png" alt="" class="logo">
+                    <div class="logo-copy">
+                        <h1 class="site-title">Assassin's creed</h1>
+                        <small class="site-description">Nothing is true,everything is permitted</small>
+                    </div>
+                </a>
+            </div>
+        </header>
+        <main class="main-content">
+            <div class="container">
+
+            </div>
+        </main>
+        <link th:replace="common :: #commonFooter">
+    </div>
+</body>
+</html>

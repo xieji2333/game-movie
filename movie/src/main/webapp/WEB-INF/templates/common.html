@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="commonHead">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+
+    <!-- Loading third party fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,700|" rel="stylesheet" type="text/css">
+    <link href="static/fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Loading main css file -->
+    <link rel="stylesheet" href="static/style.css">
+
+    <!--[if lt IE 9]>
+    <script src="static/js/ie-support/html5.js"></script>
+    <script src="static/js/ie-support/respond.js"></script>
+    <![endif]-->
+
+    <script src="static/js/jquery-1.11.1.min.js"></script>
+    <script src="static/js/plugins.js"></script>
+    <script src="static/js/app.js"></script>
+
+</head>
+<body>
+    <header id="commonHeader" class="site-header">
+        <div class="container">
+            <a th:href="@{/index}" id="branding">
+                <img src="static/images/logo.png" alt="" class="logo">
+                <div class="logo-copy">
+                    <h1 class="site-title">Xieji game</h1>
+                    <small class="site-description">All for the best of you!</small>
+                </div>
+            </a> <!-- #branding -->
+
+            <div style="align-self: center">
+                <h2>Welcome [[${session.userLogin.username}]]</h2>
+                <a id="logout" th:href="@{/logout}">Logout</a>
+            </div>
+            <script type="text/javascript" >
+                $("#logout").click(function () {
+                    return confirm("Are you sure you want to logout?");
+                });
+            </script>
+
+            <div class="main-navigation">
+                <button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+                <ul class="menu">
+                    <!--获取请求域中的isActive信息，判断当前页面是否被选中，从而设置它的class属性-->
+                    <li th:class="${isActive == 'index' ? 'menu-item current-menu-item' : 'menu-item'}">
+                        <a th:href="@{/index}">Home</a>
+                    </li>
+                    <li th:class="${isActive == 'about' ? 'menu-item current-menu-item' : 'menu-item'}">
+                        <a th:href="@{/about}">About</a>
+                    </li>
+                    <li th:class="${isActive == 'review' ? 'menu-item current-menu-item' : 'menu-item'}">
+                        <a th:href="@{/review?pageNum=1}">Movie reviews</a>
+                    </li>
+                    <li th:class="${isActive == 'joinus' ? 'menu-item current-menu-item' : 'menu-item'}">
+                        <a th:href="@{/joinus}">Join us</a>
+                    </li>
+                    <li th:class="${isActive == 'contact' ? 'menu-item current-menu-item' : 'menu-item'}">
+                        <a th:href="@{/contact}">Contact</a>
+                    </li>
+                </ul> <!-- .menu -->
+
+                <form action="#" class="search-form">
+                    <input type="text" placeholder="Search...">
+                    <button><i class="fa fa-search"></i></button>
+                </form>
+            </div> <!-- .main-navigation -->
+
+            <div class="mobile-navigation"></div>
+        </div>
+    </header>
+
+    <footer id="commonFooter" class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="widget">
+                        <h3 class="widget-title">About Us</h3>
+                        <p>We are loyal game lovers,we love games,and we want show you about what we love!</p>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="widget">
+                        <h3 class="widget-title">Recent Review</h3>
+                        <ul class="no-bullet">
+                            <li><a href="#">Lorem ipsum dolor</a></li>
+                            <li><a href="#">Sit amet consecture</a></li>
+                            <li><a href="#">Dolorem respequem</a></li>
+                            <li><a href="#">Invenore veritae</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="widget">
+                        <h3 class="widget-title">Help Center</h3>
+                        <ul class="no-bullet">
+                            <li><a href="#">Lorem ipsum dolor</a></li>
+                            <li><a href="#">Sit amet consecture</a></li>
+                            <li><a href="#">Dolorem respequem</a></li>
+                            <li><a href="#">Invenore veritae</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="widget">
+                        <h3 class="widget-title">Join Us</h3>
+                        <ul class="no-bullet">
+                            <li><a href="#">Lorem ipsum dolor</a></li>
+                            <li><a href="#">Sit amet consecture</a></li>
+                            <li><a href="#">Dolorem respequem</a></li>
+                            <li><a href="#">Invenore veritae</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="widget">
+                        <h3 class="widget-title">Social Media</h3>
+                        <ul class="no-bullet">
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">Google+</a></li>
+                            <li><a href="#">Pinterest</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="widget">
+                        <h3 class="widget-title">Newsletter</h3>
+                        <form action="#" class="subscribe-form">
+                            <input type="text" placeholder="Email Address">
+                        </form>
+                    </div>
+                </div>
+            </div> <!-- .row -->
+
+            <div class="colophon">Copyright 2021 Xieji game, Designed by Lake Lee. All rights reserved</div>
+        </div> <!-- .container -->
+
+    </footer>
+</body>
+</html>

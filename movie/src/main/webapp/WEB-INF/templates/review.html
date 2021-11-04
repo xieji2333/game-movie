@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<link th:replace="common :: commonHead">
+		<title>Movie Review | Review</title>
+	</head>
+
+
+	<body>
+		
+
+		<div id="site-content">
+			<link th:replace="common :: #commonHeader">
+			<main class="main-content">
+				<div class="container">
+					<div class="page">
+						<div class="breadcrumbs">
+							<a th:href="@{/index}">Home</a>
+							<span>Movie Review</span>
+						</div>
+
+						<div class="filters">
+							<form id="select_form" method="post" th:action="@{/review?pageNum=1}">
+							<select name="tagSelect" id="tagSelect" >
+								<option selected value="">all</option>
+								<option id="action" value="action">action</option>
+								<option id="open world" value="open world">open world</option>
+								<option id="survival" value="survival">survival</option>
+								<option id="horror" value="horror">horror</option>
+								<option id="racing" value="racing">racing</option>
+							</select>
+							<select name="yearSelect" id="yearSelect">
+								<option selected value="">all</option>
+								<option id="20002010" value="20002010">2000-2010</option>
+								<option id="20112020" value="20112020">2011-2020</option>
+								<option id="20212030" value="20212030">2021~</option>
+							</select>
+								<input type="submit" value="ok">
+							</form>
+						</div>
+						<div class="movie-list">
+							<div class="movie" th:each="game : ${games}">
+								<figure class="movie-poster"><img th:src="${game.src}" alt="#"></figure>
+								<div class="movie-title"><a href="single.html">[[${game.name}]]</a></div>
+								<p>[[${game.info}]]</p>
+							</div>
+						</div> <!-- .movie-list -->
+						<script th:inline="javascript">
+							$(function () {
+								//若当前页是第一页，则隐藏 前一页 按钮
+								let forwardPages = /*[[${num - 1}]]*/ "hi";
+								if (forwardPages < 1) {
+									$(".pagination").find("a:first").hide();
+								}
+								//若当前页是最后一页，则隐藏 后一页 按钮
+								let pageTotal = /*[[${pageTotal}]]*/ "hello";
+								let afterwardPages = /*[[${num + 1}]]*/ "hi";
+								if (afterwardPages > pageTotal) {
+									$(".pagination").find("a:last").hide();
+								}
+
+							});
+						</script>
+
+						<div class="pagination">
+							<a th:href="@{/review(pageNum = ${num - 1})}" class="page-number prev"><i class="fa fa-angle-left"></i></a>
+							<!--<a th:href="@{/review?pageNum=1}"
+							   th:class="${num == 1? 'page-number current' : 'page-number'}">1</a>
+							<a th:href="@{/review?pageNum=2}"
+							   th:class="${num == 2? 'page-number current' : 'page-number'}">2</a>
+							<a th:href="@{/review?pageNum=3}"
+							   th:class="${num == 3? 'page-number current' : 'page-number'}">3</a>-->
+							<span th:each="btn : ${btnNum}">
+								<a th:href="@{/review(pageNum = ${btn})}"
+								th:class="${num == btn? 'page-number current' : 'page-number'}">[[${btn}]]</a>
+							</span>
+							<a th:href="@{/review(pageNum = ${num + 1})}" class="page-number next"><i class="fa fa-angle-right"></i></a>
+						</div>
+					</div>
+				</div> <!-- .container -->
+			</main>
+			<link th:replace="common :: #commonFooter">
+		</div>
+		<!-- Default snippet for navigation -->
+
+	</body>
+
+</html>

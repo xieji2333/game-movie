@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="static/login_style.css">
+    <title>Login</title>
+    <script src="static/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" >
+        $(function () {
+
+            //给验证码图片绑定单击事件
+            $("#code_img").click(function () {
+                //this对象是当前正在响应事件的dom对象
+                //加上每次都不同的参数可以跳过浏览器地缓存检查
+                this.src = "kaptcha.jpg?d=" + new Date();
+            });
+
+        });
+    </script>
+</head>
+<body class="login-body">
+
+<div class="container">
+    <form class="form-signin" method="post" th:action="@{/login}">
+        <div class="form-signin-heading text-center">
+            <h1 class="sign-title">Login</h1>
+            <img src="static/images/logo.png" alt=""/>
+        </div>
+        <div class="login-wrap">
+            <label class="errorMsg" style="color: red" th:text="${msg}"></label> <br>
+            <input id="username" type="text" name="username" class="form-control"
+                   placeholder="username" autofocus>
+            <br>
+            <input type="password" name="password" class="form-control" placeholder="password">
+            <br>
+            <input id="code" type="text" name="code" class="form-control">
+            <img src="kaptcha.jpg" id="code_img" style="float: right; margin-right: 10px; width: 100px; height: 30px">
+            <br>
+            <button style="width: 280px; height: 50px" class="btn btn-lg btn-login btn-block" type="submit">
+                <i class="fa fa-check">√</i>
+            </button>
+
+            <div class="registration">
+                Still have no account?
+                <a class="" th:href="@{/register}">
+                    Go to register
+                </a>
+            </div>
+
+
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atxieji.dao.UserDao">
+    <!--sql语句标签：select、insert、update、delete-->
+    <select id="userLogin" resultType="com.atxieji.bean.User" >
+        select * from t_user where username = #{username} and password = #{password}
+    </select>
+
+    <select id="existsUser" resultType="com.atxieji.bean.User" >
+        select * from t_user where username = #{username}
+    </select>
+
+    <insert id="addUser" >
+        insert into t_user values(null,#{username},#{password})
+    </insert>
+
+    <delete id="deleteById" >
+        delete from t_user where id = #{id}
+    </delete>
+
+    <update id="updateUser" >
+        update t_user set username = #{username}, password = #{password} where id = #{id}
+    </update>
+</mapper>

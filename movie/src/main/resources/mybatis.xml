@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--
+        指定其他mapper文件的位置
+        作用：找到其他mapper文件的sql语句
+    -->
+    <mappers>
+        <!--
+            resource文件指定mapper文件的路径
+            使用“/”分隔路径
+            一个mapper resource指定一个mapper文件
+        -->
+        <mapper class="com.atxieji.dao.UserDao"/>
+    </mappers>
+</configuration>
